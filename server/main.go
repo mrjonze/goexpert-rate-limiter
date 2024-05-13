@@ -2,10 +2,19 @@ package main
 
 import (
 	"fmt"
+	"github.com/mrjonze/goexpert/rate-limiter/server/config"
 	"net/http"
 )
 
 func main() {
+	configs, err := config.LoadConfig()
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Token name: ", configs.TokenName)
+
 	http.HandleFunc("/", readHeader)
 	http.ListenAndServe(":8080", nil)
 }
