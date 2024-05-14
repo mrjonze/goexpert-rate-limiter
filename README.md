@@ -16,7 +16,7 @@ Para rodar os testes unitários da aplicação, execute o comando abaixo dentro 
 go test -v
 ```
 
-O arquivo ```.env``` se encontra na raiz do projeto e contém as variáveis de ambiente necessárias para a aplicação.
+O arquivo ```.env``` se encontra dentro da pasta ```server``` e contém as variáveis de ambiente necessárias para a aplicação.
 
 ```
 TOKEN_NAME=Nome do token a ser passado no cabeçalho da requisição
