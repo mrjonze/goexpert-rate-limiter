@@ -5,7 +5,11 @@ import (
 )
 
 type EnvConfig struct {
-	TokenName string `mapstructure:"TOKEN_NAME"`
+	TokenName         string `mapstructure:"TOKEN_NAME"`
+	RequestLimitToken int    `mapstructure:"REQUEST_LIMIT_TOKEN"`
+	RequestLimitIp    int    `mapstructure:"REQUEST_LIMIT_IP"`
+	BlockTimeToken    int    `mapstructure:"BLOCK_TIME_TOKEN"`
+	BlockTimeIp       int    `mapstructure:"BLOCK_TIME_IP"`
 }
 
 func LoadConfig() (*EnvConfig, error) {
