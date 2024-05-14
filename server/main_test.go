@@ -111,7 +111,7 @@ func TestLimitInvalidTokenHAllFail(t *testing.T) {
 		doRequest(true, &mapOfResponses, true)
 	}
 
-	assert.True(t, mapOfResponses[401] == tokenLimit, fmt.Sprint(mapOfResponses[200])+" token requests were unauthorized")
+	assert.True(t, mapOfResponses[401] == tokenLimit, fmt.Sprint(mapOfResponses[401])+" token requests were unauthorized")
 }
 
 func doRequest(includeHeader bool, mapOfResponses *map[int]int, invalidHeader bool) {
