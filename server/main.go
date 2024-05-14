@@ -4,7 +4,9 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/mrjonze/goexpert/rate-limiter/pkg"
+	"net"
 	"net/http"
+	"strings"
 )
 
 func main() {
@@ -22,5 +24,15 @@ func main() {
 }
 
 func rateLimiter(next http.Handler) http.Handler {
-	return pkg.RateLimiteHandler(next)
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+		tokenName := r.Header.Get("API_KEY")
+		ip, _, _ := net.SplitHostPort(strings.TrimSpace(r.RemoteAddr))
+
+		message, status := pkg.RateLimitRequests(ctx, ip, tokenName)
+		w.WriteHeader(status)
+		w.Write([]byte(message))
+
+		next.ServeHTTP(w, r)
+	})
 }
