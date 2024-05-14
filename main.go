@@ -7,6 +7,7 @@ import (
 	"net"
 	"net/http"
 	"strings"
+	"time"
 )
 
 var ctx = context.Background()
@@ -18,11 +19,13 @@ func main() {
 		DB:       0,                // use default DB
 	})
 
+	//rdb.Set(ctx, "key", "value", 0)
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		ip, _, _ := net.SplitHostPort(strings.TrimSpace(r.RemoteAddr))
 		w.Write([]byte("Hello, your IP is: " + ip))
 
-		err := rdb.Set(ctx, ip, ip, 0).Err()
+		err := rdb.Set(ctx, ip, "1", time.Second*10).Err()
 		if err != nil {
 			panic(err)
 		}
@@ -31,6 +34,11 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
+		rdb.Incr(ctx, ip)
+		rdb.Incr(ctx, ip)
+		rdb.Incr(ctx, ip)
+		rdb.Incr(ctx, ip)
 		fmt.Println(ip, val)
 	})
 
