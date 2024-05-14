@@ -14,11 +14,7 @@ import (
 
 func RateLimiteHandler(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		/*for name, headers := range r.Header {
-			for _, h := range headers {
-				fmt.Printf("%v: %v\n", name, h)
-			}
-		}*/
+
 		ctx := r.Context()
 		configs, err := config.LoadConfig()
 		if err != nil {
@@ -26,9 +22,7 @@ func RateLimiteHandler(next http.Handler) http.Handler {
 		}
 
 		tokenName := r.Header.Get("API_KEY")
-		//log.Println("API_KEY: ", tokenName)
 		ip, _, _ := net.SplitHostPort(strings.TrimSpace(r.RemoteAddr))
-		//log.Println("IP: ", ip)
 
 		var key string
 		var expiration int
@@ -49,10 +43,7 @@ func RateLimiteHandler(next http.Handler) http.Handler {
 			limit = configs.RequestLimitIp
 		}
 
-		//log.Println("key: ", key)
-		//log.Println("expiration: ", expiration)
-
-		db, err := db.NewRedisDb("localhost:6379", "", 0)
+		db, err := db.NewRedisDb(configs.DatabaseUrl, "", 0)
 		if err != nil {
 			panic(err)
 		}

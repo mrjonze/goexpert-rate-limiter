@@ -10,6 +10,7 @@ type EnvConfig struct {
 	RequestLimitIp    int    `mapstructure:"REQUEST_LIMIT_IP"`
 	BlockTimeToken    int    `mapstructure:"BLOCK_TIME_TOKEN"`
 	BlockTimeIp       int    `mapstructure:"BLOCK_TIME_IP"`
+	DatabaseUrl       string `mapstructure:"DATABASE_URL"`
 }
 
 func LoadConfig() (*EnvConfig, error) {
